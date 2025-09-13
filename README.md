@@ -35,7 +35,7 @@ git clone <microservice repository URL> # Booking microservice
 
 ## 3. Running
 
-Once you have set up all microservices, you can start running the system.
+Once you have all microservices set up, you can start running the system.
 
 1. Ensure that you are in the repository's root directory.
 2. Start the system by running:
