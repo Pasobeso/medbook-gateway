@@ -1,0 +1,123 @@
+name: medbook
+
+x-app-env: &app_env
+  USERS_DATABASE_URL: users_db
+  BOOKING_DATABASE_URL: booking_db 
+
+services:
+  # GATEWAY
+  gateway:
+    image: nginx:stable-alpine
+    container_name: gateway
+    depends_on:
+      users:
+        condition: service_healthy
+      booking:
+        condition: service_healthy
+    ports:
+      - "3000:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    networks:
+      - gateway
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost/health || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # USERS
+  users:
+    build:
+      context: ./services/users
+      dockerfile: Dockerfile
+    # environment:
+    #   <<: *app_env
+    #   DATABASE_URL: ${USERS_DATABASE_URL}
+    #   SERVICE_NAME: users
+    expose:
+      - "3000"
+    depends_on:
+      users-db:
+        condition: service_healthy
+    # command: ["/bin/sh", "-c", "while true; do sleep 3600; done"]
+    # command: ["/bin/sh", "-c", "diesel migration run", "&&", "/bin/sh", "-c", "/app/server"]
+    command: ["/bin/sh", "-c", "diesel migration run && /app/server"]
+    networks:
+      - gateway
+      - users_net
+      - backend
+    env_file:
+      - ./services/users/.env
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:3000/health-check > /dev/null"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  users-db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: users_db
+    volumes:
+      - users_db_data:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    networks:
+      - users_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d users"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer:latest
+    expose:
+      - "8080"
+    ports:
+      - "7070:8080"
+    networks:
+      - gateway
+      - users_net
+      - booking_net
+
+  # BOOKING
+  booking:
+    build:
+      context: ./services/booking
+      dockerfile: Dockerfile
+    environment:
+      <<: *app_env
+      DATABASE_URL: ${BOOKING_DATABASE_URL}
+      SERVICE_NAME: booking
+    expose:
+      - "3000"
+    # depends_on:
+    #   users-db:
+    #   condition: service_healthy
+    networks:
+      - gateway
+      - booking_net
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:3000/health > /dev/null"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+networks:
+  gateway:
+    driver: bridge
+  backend:
+    driver: bridge
+  users_net:
+    driver: bridge
+  booking_net:
+    driver: bridge
+
+volumes:
+  users_db_data:
+  orders_db_data:
