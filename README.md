@@ -96,7 +96,6 @@ ok
 
 ```yml
 # in docker-compose.yml
----
 users-db:
   image: postgres:alpine
   environment:
