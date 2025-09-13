@@ -92,7 +92,7 @@ ok
 
 1. Go to `http://localhost:3000/adminer/`.
 2. From the "System" dropdown, check `PostgreSQL`.
-3. For "Server", enter the name of the service in `docker-compose.yml` that end with `-db`. From the example below, enter `users-db`.
+3. For "Server", enter the name of the service in `docker-compose.yml` that ends with `-db`. From the example below, enter `users-db`.
 
 ```yml
 # in docker-compose.yml
