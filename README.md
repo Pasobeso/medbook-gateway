@@ -1,5 +1,9 @@
 # Installation
 
+# Video demonstration
+
+# Installation
+
 ## 1. First steps
 
 1. Ensure that Docker CLI and Docker Compose are installed.
@@ -11,12 +15,27 @@ git clone https://github.com/Pasobeso/medbook-gateway.git
 
 ## 2. Adding microservices
 
-The gateway requires two microservices to function
+The gateway requires these microservices to function
 
-- Users microservice
-- Booking microservice
+- [Users microservice](https://github.com/Pasobeso/medbook-userservice)
 
-Add them by following these steps:
+There are two ways to do add the following microservices to the gateway.
+
+### Through Makefile
+
+Clone the services by executing:
+
+```bash
+make clone-services
+```
+
+This will clone the microservice repositories for you. You can update to the latest version of the repository by:
+
+```bash
+make update-services
+```
+
+### Manually
 
 1. In the repository, change to the `./services` directory.
 
@@ -27,21 +46,47 @@ cd services
 2. Clone the microservices into this directory.
 
 ```bash
-git clone <microservice repository URL> # Users microservice
-git clone <microservice repository URL> # Booking microservice
+git clone https://github.com/Pasobeso/medbook-userservice # Users microservice
 ```
 
-3. The cloned repositories will not contain `.env` files. Create a file named `.env` in each of the repositories, and follow the formats provided in the `.env-example` files.
+## 3. Setting up .env files
+
+.env files are required in order for each service to function properly. While the .env files are not provided for security reasons, examples (.env-example) are provided.
+
+For example, `.users-service.env-example`
+
+```bash
+SERVER_PORT=3000
+SERVER_BODY_LIMIT=2000
+SERVER_TIMEOUT=2000
+
+DATABASE_URL=postgres://postgres:example@users-db:5432/users_db
+
+JWT_PATIENT_SECRET="patient"
+JWT_PATIENT_REFRESH_SECRET="patientrefresh"
+JWT_DOCTOR_SECRET="doctor"
+JWT_DOCTOR_REFRESH_SECRET="doctorrefresh"
+
+stage="local"
+```
+
+This contains all the keys and values needed for the Users service. You can use them out of the box as this reflects the Docker Compose configurations. To use this, create a file named `.users-service.env` and copy the contents above into the newly created file.
 
 ## 3. Running
 
 Once you have all microservices set up, you can start running the system.
 
 1. Ensure that you are in the repository's root directory.
-2. Start the system by running:
+2. Build the images and start the system by running:
 
 ```bash
-docker compose up -d --build
+make build-start
+```
+
+**Note:** You need to run this every time the source code in any of the services changes. If you do not want to rebuild the images, run this instead:
+
+```bash
+make start
 ```
 
 3. Wait until the command finishes. When it does, it should look like this:
@@ -54,13 +99,15 @@ docker compose up -d --build
  ✔ Container medbook-users-1     Healthy     22.1s
 ```
 
+As long as there are no errors, the system should work just fine.
+
 4. You can now try out the gateway and its services by following the next steps.
 
 ## 4. Try them out
 
 ### Gateway
 
-Try going to `http://localhost:3000/health` on your web browser. It should return a mostly blank page with only:
+Try going to `http://localhost:3000/health-check` on your web browser. It should return a mostly blank page with only:
 
 ```
 ok
@@ -104,3 +151,22 @@ users-db:
 
 4. For "Username", "Password" and "Database", refer to the `docker-compose.yml` example above and enter the values of `POSTGRES_USER`, `POSTGRES_PASSWORD` and `POSTGRES_DB`. For example, they should be `postgres`, `example` and `users_db` respectively.
 5. Press `Login`. If successful, you should be able to view and manage the database this way.
+
+## 5. Frontend
+
+This system has a [frontend](https://github.com/Pasobeso/SA-Frontend.git) as well. Follow the steps in the repository on how to set it up.
+
+# Contributors
+
+### 1. Kanathip Pandee (6510503247)
+
+- Users service
+
+### 2. Ittidet Namlao (6510503903)
+
+- Frontend
+
+### 3. Ittiwat Chuchoet (6510503913)
+
+- Gateway setup
+- Frontend revision
