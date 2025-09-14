@@ -1,4 +1,22 @@
-# Installation
+# System architecture
+
+This system uses the microservice architecture. This repo acts a gateway to the services, namely:
+
+- **[Users microservice](https://github.com/Pasobeso/medbook-userservice)** - manages user use cases and authentication.
+
+- **Booking microservice (not implemented)** - manages booking/appointment use cases.
+
+- **Inventory microservice (not implemented)** - manages drug inventory, including retrieving/adding/removing drugs.
+
+- **Order microservice (not implemented)** - manages order use cases.
+
+- **Delivery microservice (not implemented)** - manages delivery lifecycle.
+
+These services have their own dedicated databases. A service cannot directly access another service's database. However, services can directly communicate with each other (for now). Depending on the professor's advice, the communication scheme can be changed something that resembles orchestration-based architecture style.
+
+Requests are sent to the gateway, which are redirected to their appropriate services.
+
+**Note:** Since some services have yet to be implemented, this is not a 100%-accurate depiction of the current system.
 
 # Video demonstration
 
@@ -15,11 +33,7 @@ git clone https://github.com/Pasobeso/medbook-gateway.git
 
 ## 2. Adding microservices
 
-The gateway requires these microservices to function
-
-- [Users microservice](https://github.com/Pasobeso/medbook-userservice)
-
-There are two ways to do add the following microservices to the gateway.
+There are two ways to do add the microservices to the gateway.
 
 ### Through Makefile
 
@@ -123,14 +137,6 @@ This means that the gateway is running properly.
 ok
 ```
 
-### Booking microservice
-
-`http://localhost:3000/booking/health-check` should return:
-
-```
-ok
-```
-
 ### Adminer
 
 [Adminer](https://www.adminer.org) is a lightweight frontend for managing databases. It supports PostgreSQL among other DBMSes. You can check this out by doing the following:
@@ -158,15 +164,15 @@ This system has a [frontend](https://github.com/Pasobeso/SA-Frontend.git) as wel
 
 # Contributors
 
-### 1. Kanathip Pandee (6510503247)
+### [1. Kanathip Pandee (6510503247)](https://github.com/KanathipP)
 
 - Users service
 
-### 2. Ittidet Namlao (6510503903)
+### [2. Ittidet Namlao (6510503903)](https://github.com/tirenton)
 
 - Frontend
 
-### 3. Ittiwat Chuchoet (6510503913)
+### [3. Ittiwat Chuchoet (6510503913)](https://github.com/ciaabcdefg)
 
 - Gateway setup
 - Frontend revision
