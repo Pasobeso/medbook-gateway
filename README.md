@@ -16,6 +16,8 @@ These services have their own dedicated databases. A service cannot directly acc
 
 Requests are sent to the gateway, which are redirected to their appropriate services.
 
+## System diagram
+
 **Note:** Since some services have yet to be implemented, this is not a 100%-accurate depiction of the current system.
 
 # Video demonstration
