@@ -24,6 +24,9 @@ Requests are sent to the gateway, which are redirected to their appropriate serv
 
 # Video demonstration
 
+- [Update 1 (Google Drive)](https://drive.google.com/file/d/10VuvLtiBaTC37-yt-nzk58lruu1MXWZd/view?usp=drive_link)
+
+
 # Installation
 
 ## 1. First steps
