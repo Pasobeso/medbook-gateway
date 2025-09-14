@@ -18,6 +18,8 @@ Requests are sent to the gateway, which are redirected to their appropriate serv
 
 ## System diagram
 
+![System diagram](https://github.com/Pasobeso/medbook-gateway/blob/main/System%20Diagram.png?raw=true)
+
 **Note:** Since some services have yet to be implemented, this is not a 100%-accurate depiction of the current system.
 
 # Video demonstration
