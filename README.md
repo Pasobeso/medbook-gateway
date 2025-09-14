@@ -4,9 +4,9 @@ This system uses the microservice architecture. This repo acts a gateway to the 
 
 - **[Users microservice](https://github.com/Pasobeso/medbook-userservice)** - manages user use cases and authentication.
 
-- **Booking microservice (not implemented)** - manages booking/appointment use cases.
+- **[Booking microservice (work in progress)](https://github.com/Pasobeso/medbook-bookingservice)** - manages booking/appointment use cases.
 
-- **Inventory microservice (not implemented)** - manages drug inventory, including retrieving/adding/removing drugs.
+- **[Inventory microservice (work in progress)](https://github.com/Pasobeso/medbook-inventoryservice)** - manages drug inventory, including retrieving/adding/removing drugs.
 
 - **Order microservice (not implemented)** - manages order use cases.
 
@@ -25,7 +25,6 @@ Requests are sent to the gateway, which are redirected to their appropriate serv
 # Video demonstration
 
 - [Update 1 (Google Drive)](https://drive.google.com/file/d/10VuvLtiBaTC37-yt-nzk58lruu1MXWZd/view?usp=drive_link)
-
 
 # Installation
 
@@ -165,9 +164,60 @@ users-db:
 4. For "Username", "Password" and "Database", refer to the `docker-compose.yml` example above and enter the values of `POSTGRES_USER`, `POSTGRES_PASSWORD` and `POSTGRES_DB`. For example, they should be `postgres`, `example` and `users_db` respectively.
 5. Press `Login`. If successful, you should be able to view and manage the database this way.
 
-## 5. Frontend
+## 5. Install the frontend
 
-This system has a [frontend](https://github.com/Pasobeso/SA-Frontend.git) as well. Follow the steps in the repository on how to set it up.
+This system has a [frontend](https://github.com/Pasobeso/SA-Frontend.git) as well. Before installing, ensure that:
+
+- A Node package manager (npm, pnpm, yarn, etc.) is installed. **pnpm v9.9.0** is preferred. Using other package manager might break the frontend's functionalities, but the chances are slim.
+
+  - [npm](https://www.npmjs.com/) (comes with Node installation)
+  - [pnpm](https://pnpm.io/)
+  - [yarn](https://yarnpkg.com/)
+
+- Have the system running (steps 1 through 4)
+
+Once all of these are done, you can clone the frontend repository itself:
+
+```bash
+git clone https://github.com/Pasobeso/SA-Frontend
+```
+
+Change directory to the frontend project root, and install dependencies by:
+
+```bash
+cd SA-Frontend
+pnpm i
+# npm i
+# yarn add
+```
+
+If you wish to see changes to the source code apply in real time at the cost of performance, run:
+
+```bash
+pnpm dev
+# npm run dev
+# yarn run dev
+```
+
+Otherwise, if you want a faster build at the expense of live edits, build the project by:
+
+```bash
+pnpm build
+# npm run build
+# yarn run build
+```
+
+Wait until the build finishes, then from now on, run:
+
+```bash
+pnpm start
+# npm run start
+# yarn run start
+```
+
+You will need to build the project again if you make any changes to the source code.
+
+Now you can access the frontend through your web browser. Go to `http://localhost:8080/login` to see the login page.
 
 # Contributors
 
