@@ -215,7 +215,7 @@ pnpm start
 # yarn run start
 ```
 
-You will need to build the project again if you make any changes to the source code.
+You will need to rebuild the project if you make any changes to the source code.
 
 Now you can access the frontend through your web browser. Go to `http://localhost:8080/login` to see the login page.
 
