@@ -47,13 +47,11 @@ docker compose up -d --build
 3. Wait until the command finishes. When it does, it should look like this:
 
 ```
- ✔ Service booking               Built       4.4s
  ✔ Service users                 Built       4.4s
  ✔ Container medbook-adminer-1   Running     0.0s
  ✔ Container medbook-users-db-1  Healthy     11.7s
  ✔ Container gateway             Started     22.7s
  ✔ Container medbook-users-1     Healthy     22.1s
- ✔ Container medbook-booking-1   Healthy     21.6s
 ```
 
 4. You can now try out the gateway and its services by following the next steps.
