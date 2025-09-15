@@ -225,7 +225,7 @@ Now you can access the frontend through your web browser. Go to `http://localhos
 
 - Users service
 
-### [2. Ittidet Namlao (6510503903)](https://github.com/tirenton)
+### [2. Ittidet Namlao (6510503905)](https://github.com/tirenton)
 
 - Frontend
 
